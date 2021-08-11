@@ -3,15 +3,19 @@ using UnityEngine.UI;
 
 public class SudokuBoard : MonoBehaviour
 {
-    [Header("Board Size")]
+    /// The sudoku data that contains the grid
+    [Header("Sudoku Data")]
+    [SerializeField] private SudokuData _sudokuData;
+    
     /// The number of rows to display
+    [Header("Board Size")]
     [SerializeField] private int _numberOfRows = 9;
 
     /// The number of columns to display
     [SerializeField] private int _numberOfColumns = 9;
 
-    [Header("Board Padding")]
     /// The internal margin between the top of the inventory panel and the first slots
+    [Header("Board Padding")]
     [SerializeField] private int _paddingTop = 20;
 
     /// The internal margin between the right of the inventory panel and the last slots
@@ -23,8 +27,8 @@ public class SudokuBoard : MonoBehaviour
     /// The internal margin between the left of the inventory panel and the first slots
     [SerializeField] private int _paddingLeft = 20;
 
-    [Header("Slots")]
     /// The prefab of the sudoku slot
+    [Header("Slots")] 
     [SerializeField] private GameObject _slotPrefab;
 
     /// The horizontal and vertical margin to apply between slots rows and columns
