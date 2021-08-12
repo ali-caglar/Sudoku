@@ -19,14 +19,20 @@ public class SudokuDataGenerator
         {
             for (int column = 0; column < _sizeOfBoard; column++)
             {
+                // We keep trying until it's filled
                 while (sudokuGrid[row, column] == 0)
                 {
+                    // Producing a random number(1-9) to try
                     int numberToTry = _random.Next(1, 10);
 
+                    // If there's no conflict (row-column-region) assign the number
+                    // Otherwise keep the slot empty
                     if (_solver.IsValid(sudokuGrid, row, column, numberToTry))
                     {
                         sudokuGrid[row, column] = numberToTry;
 
+                        // Check if there's any solution
+                        // If not remove the assigned number
                         if (!_solver.HasAnySolution(sudokuGrid))
                         {
                             sudokuGrid[row, column] = 0;
