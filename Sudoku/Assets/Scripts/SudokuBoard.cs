@@ -119,20 +119,22 @@ public class SudokuBoard : MonoBehaviour
     /// </summary>
     private void CreateSlots()
     {
-        for (int x = 0; x < _numberOfRows; x++)
+        int[,] sudokuGrid = _sudokuData.SudokuGrid;
+        
+        for (int row = 0; row < _numberOfRows; row++)
         {
-            for (int y = 0; y < _numberOfColumns; y++)
+            for (int column = 0; column < _numberOfColumns; column++)
             {
                 GameObject slot = Instantiate(_slotPrefab, SudokuBoardGrid.transform);
 
                 slot.transform.position = transform.position;
                 slot.GetComponent<RectTransform>().localScale = Vector3.one;
-                slot.name = $"Slot {x},{y}";
+                slot.name = $"Slot {row},{column}";
 
                 SudokuSlot sudokuSlot = slot.AddComponent<SudokuSlot>();
                 
-                sudokuSlot.SetID(x, y);
-                sudokuSlot.SetNumber(0);
+                sudokuSlot.SetID(row, column);
+                sudokuSlot.SetNumber(sudokuGrid[row, column]);
             }
         }
     }
