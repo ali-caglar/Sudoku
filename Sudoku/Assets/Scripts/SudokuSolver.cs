@@ -12,16 +12,16 @@ public class SudokuSolver
     /// <returns>Returns true if there's any solution to solve the sudoku grid.</returns>
     public bool HasAnySolution(int[,] sudokuGridToTest, int slotIndex = 0)
     {
-        int[,] copiedSudokuGrid = (int[,]) sudokuGridToTest.Clone();
-
-        int row = (int) Math.Floor((double) (slotIndex / _sizeOfBoard));
-        int column = slotIndex % _sizeOfBoard;
-
         // Checking if the board completely filled
         if (slotIndex == 81)
         {
             return true;
         }
+        
+        int[,] copiedSudokuGrid = (int[,]) sudokuGridToTest.Clone();
+
+        int row = (int) Math.Floor((double) (slotIndex / _sizeOfBoard));
+        int column = slotIndex % _sizeOfBoard;
 
         // Checking the slot has already filled
         if (copiedSudokuGrid[row, column] != 0)
