@@ -12,8 +12,7 @@ public class SudokuSolver
     /// <returns>Returns true if there's any solution to solve the sudoku grid.</returns>
     public bool HasAnySolution(int[,] sudokuGridToTest, int slotIndex = 0)
     {
-        int[,] copiedSudokuGrid = new int[_sizeOfBoard, _sizeOfBoard];
-        Array.Copy(sudokuGridToTest, copiedSudokuGrid, sudokuGridToTest.Length);
+        int[,] copiedSudokuGrid = (int[,]) sudokuGridToTest.Clone();
 
         int row = (int) Math.Floor((double) (slotIndex / _sizeOfBoard));
         int column = slotIndex % _sizeOfBoard;
