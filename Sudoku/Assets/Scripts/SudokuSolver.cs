@@ -3,7 +3,7 @@ using System;
 public class SudokuSolver
 {
     private int _sizeOfBoard = 9;
-    
+
     /// <summary>
     /// Checks the sudoku grid recursively if has any solution.
     /// </summary>
@@ -13,7 +13,7 @@ public class SudokuSolver
     public bool HasAnySolution(int[,] sudokuGridToTest, int slotIndex = 0)
     {
         int[,] copiedSudokuGrid = new int[_sizeOfBoard, _sizeOfBoard];
-        Array.Copy(sudokuGridToTest,copiedSudokuGrid, sudokuGridToTest.Length);
+        Array.Copy(sudokuGridToTest, copiedSudokuGrid, sudokuGridToTest.Length);
 
         int row = (int) Math.Floor((double) (slotIndex / _sizeOfBoard));
         int column = slotIndex % _sizeOfBoard;
