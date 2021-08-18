@@ -51,4 +51,22 @@ public class SudokuDataGenerator
 
         return sudokuGrid;
     }
+
+    /// <summary>
+    /// Returns a shuffled list that contains numbers from 0 to 80. 
+    /// </summary>
+    /// <returns></returns>
+    private List<int> ReturnRandomCellIndexList()
+    {
+        List<int> randomList = new List<int>();
+
+        for (int i = 0; i < 81; i++)
+        {
+            randomList.Add(i);
+        }
+
+        randomList.Shuffle();
+
+        return randomList;
+    }
 }
