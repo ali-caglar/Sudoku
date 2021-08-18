@@ -53,6 +53,42 @@ public class SudokuDataGenerator
     }
 
     /// <summary>
+    /// It takes a complete sudoku grid and resets random cells to make a solvable sudoku grid.
+    /// </summary>
+    /// <param name="completeSudokuGrid"></param>
+    /// <returns>Returns a solvable sudoku grid data</returns>
+    public int[,] PrepareSudokuDataToBePlayable(int[,] completeSudokuGrid)
+    {
+        int[,] copiedSudokuGrid = (int[,]) completeSudokuGrid.Clone();
+        
+        // We create a random list of cell indexes
+        List<int> randomCellOrder = ReturnRandomCellIndexList();
+
+        // Checking every cell
+        while (randomCellOrder.Count > 0)
+        {
+            // Getting a index number from a shuffled list and then removing it to not check again
+            int cellIndex = randomCellOrder[0];
+            int row = (int) Math.Floor((double) (cellIndex / _sizeOfBoard));
+            int column = cellIndex % _sizeOfBoard;
+            randomCellOrder.RemoveAt(0);
+
+            // Backup the removed number
+            int removedNumber = copiedSudokuGrid[row, column];
+            // Resetting the cell
+            copiedSudokuGrid[row, column] = 0;
+
+            // If grid has no unique solution we putting the number back
+            if (!_solver.HasUniqueSolution(copiedSudokuGrid))
+            {
+                copiedSudokuGrid[row, column] = removedNumber;
+            }
+        }
+
+        return copiedSudokuGrid;
+    }
+
+    /// <summary>
     /// Returns a shuffled list that contains numbers from 0 to 80. 
     /// </summary>
     /// <returns></returns>
