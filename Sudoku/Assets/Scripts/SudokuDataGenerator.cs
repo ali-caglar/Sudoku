@@ -1,4 +1,7 @@
-﻿using Random = System.Random;
+﻿using System;
+using System.Collections.Generic;
+using Extensions;
+using Random = System.Random;
 
 public class SudokuDataGenerator
 {
@@ -26,7 +29,7 @@ public class SudokuDataGenerator
                     int numberToTry = _random.Next(1, 10);
 
                     // If there's no conflict (row-column-region) assign the number
-                    // Otherwise keep the slot empty
+                    // Otherwise keep the cell empty
                     if (_solver.IsValid(sudokuGrid, row, column, numberToTry))
                     {
                         sudokuGrid[row, column] = numberToTry;

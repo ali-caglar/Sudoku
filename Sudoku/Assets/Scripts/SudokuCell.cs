@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SudokuSlot : Selectable
+public class SudokuCell : Selectable
 {
     /// The slot's location
     public Vector2 ID { get; private set; }

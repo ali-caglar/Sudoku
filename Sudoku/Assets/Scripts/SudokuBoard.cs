@@ -14,31 +14,31 @@ public class SudokuBoard : MonoBehaviour
     /// The number of columns to display
     [SerializeField] private int _numberOfColumns = 9;
 
-    /// The internal margin between the top of the inventory panel and the first slots
+    /// The internal margin between the top of the sudoku board and the first cell
     [Header("Board Padding")]
     [SerializeField] private int _paddingTop = 20;
 
-    /// The internal margin between the right of the inventory panel and the last slots
+    /// The internal margin between the right of the sudoku board and the last cell
     [SerializeField] private int _paddingRight = 20;
 
-    /// The internal margin between the bottom of the inventory panel and the last slots
+    /// The internal margin between the bottom of the sudoku board and the last cell
     [SerializeField] private int _paddingBottom = 20;
 
-    /// The internal margin between the left of the inventory panel and the first slots
+    /// The internal margin between the left of the sudoku board and the first cell
     [SerializeField] private int _paddingLeft = 20;
 
-    /// The prefab of the sudoku slot
-    [Header("Slots")] 
-    [SerializeField] private GameObject _slotPrefab;
+    /// The prefab of the sudoku cell
+    [Header("Sudoku Cell")] 
+    [SerializeField] private GameObject _cellPrefab;
 
-    /// The horizontal and vertical margin to apply between slots rows and columns
-    [SerializeField] private Vector2 _slotMargin = new Vector2(5, 5);
+    /// The horizontal and vertical margin to apply between cell's rows and columns
+    [SerializeField] private Vector2 _cellMargin = new Vector2(5, 5);
 
-    /// The grid layout used to display the inventory in rows and columns
+    /// The grid layout used to display the sudoku board in rows and columns
     public GridLayoutGroup SudokuBoardGrid { get; private set; }
 
-    /// The horizontal and vertical size of the slots
-    private Vector2 _slotSize = new Vector2(50, 50);
+    /// The horizontal and vertical size of the cells
+    private Vector2 _cellSize = new Vector2(50, 50);
 
     /// The rect transform object of this gameobject
     private RectTransform _rectTransform;
@@ -50,25 +50,25 @@ public class SudokuBoard : MonoBehaviour
 
     private void Start()
     {
-        ResizeSlot();
+        ResizeCell();
         AddGridLayoutGroup();
         ResizeBoard();
-        CreateSlots();
+        CreateSudokuBoard();
     }
 
     /// <summary>
-    /// Resizes the sudoku slots, depends the screen size, the padding and margin
+    /// Resizes the sudoku cells, depends the screen size, the padding and margin
     /// </summary>
-    private void ResizeSlot()
+    private void ResizeCell()
     {
         Canvas rootCanvas = GetComponentInParent<Canvas>().rootCanvas;
 
         float widthOfScreen = Screen.width / rootCanvas.scaleFactor;
-        float widthOfMargin = _paddingLeft + _slotMargin.x * (_numberOfColumns - 1) + _paddingRight;
+        float widthOfMargin = _paddingLeft + _cellMargin.x * (_numberOfColumns - 1) + _paddingRight;
 
         float newSize = (widthOfScreen - widthOfMargin) / _numberOfColumns;
 
-        _slotSize = new Vector2(newSize, newSize);
+        _cellSize = new Vector2(newSize, newSize);
     }
 
     /// <summary>
@@ -95,8 +95,8 @@ public class SudokuBoard : MonoBehaviour
         SudokuBoardGrid.padding.right = _paddingRight;
         SudokuBoardGrid.padding.bottom = _paddingBottom;
         SudokuBoardGrid.padding.left = _paddingLeft;
-        SudokuBoardGrid.cellSize = _slotSize;
-        SudokuBoardGrid.spacing = _slotMargin;
+        SudokuBoardGrid.cellSize = _cellSize;
+        SudokuBoardGrid.spacing = _cellMargin;
     }
 
     /// <summary>
@@ -104,9 +104,9 @@ public class SudokuBoard : MonoBehaviour
     /// </summary>
     private void ResizeBoard()
     {
-        float newWidth = _paddingLeft + _slotSize.x * _numberOfColumns + _slotMargin.x * (_numberOfColumns - 1) +
+        float newWidth = _paddingLeft + _cellSize.x * _numberOfColumns + _cellMargin.x * (_numberOfColumns - 1) +
                          _paddingRight;
-        float newHeight = _paddingTop + _slotSize.y * _numberOfRows + _slotMargin.y * (_numberOfRows - 1) +
+        float newHeight = _paddingTop + _cellSize.y * _numberOfRows + _cellMargin.y * (_numberOfRows - 1) +
                           _paddingBottom;
 
         Vector2 newSize = new Vector2(newWidth, newHeight);
@@ -115,9 +115,9 @@ public class SudokuBoard : MonoBehaviour
     }
 
     /// <summary>
-    /// Creates the slots
+    /// Creates the sudoku grid
     /// </summary>
-    private void CreateSlots()
+    private void CreateSudokuBoard()
     {
         int[,] sudokuGrid = _sudokuData.SudokuGrid;
         
@@ -125,16 +125,16 @@ public class SudokuBoard : MonoBehaviour
         {
             for (int column = 0; column < _numberOfColumns; column++)
             {
-                GameObject slot = Instantiate(_slotPrefab, SudokuBoardGrid.transform);
+                GameObject slot = Instantiate(_cellPrefab, SudokuBoardGrid.transform);
 
                 slot.transform.position = transform.position;
                 slot.GetComponent<RectTransform>().localScale = Vector3.one;
                 slot.name = $"Slot {row},{column}";
 
-                SudokuSlot sudokuSlot = slot.AddComponent<SudokuSlot>();
+                SudokuCell sudokuCell = slot.AddComponent<SudokuCell>();
                 
-                sudokuSlot.SetID(row, column);
-                sudokuSlot.SetNumber(sudokuGrid[row, column]);
+                sudokuCell.SetID(row, column);
+                sudokuCell.SetNumber(sudokuGrid[row, column]);
             }
         }
     }

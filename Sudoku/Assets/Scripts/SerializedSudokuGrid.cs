@@ -18,16 +18,16 @@ public struct SerializedSudokuGrid
 
         if (_sudokuGridData == null || _sudokuGridData.Count == 0)
         {
-            Debug.LogWarning($"Sudoku Data is empty.");
+            Debug.LogWarning("Sudoku Data is empty.");
             return grid;
         }
 
-        for (int slotIndex = 0; slotIndex < 81; slotIndex++)
+        for (int cellIndex = 0; cellIndex < 81; cellIndex++)
         {
-            int row = (int) Math.Floor((double) (slotIndex / 9));
-            int column = slotIndex % 9;
+            int row = (int) Math.Floor((double) (cellIndex / 9));
+            int column = cellIndex % 9;
 
-            grid[row, column] = _sudokuGridData[slotIndex];
+            grid[row, column] = _sudokuGridData[cellIndex];
         }
 
         return grid;
@@ -45,8 +45,8 @@ public struct SerializedSudokuGrid
         {
             for (int column = 0; column < 9; column++)
             {
-                int slot = data[row, column];
-                _sudokuGridData.Add(slot);
+                int cellData = data[row, column];
+                _sudokuGridData.Add(cellData);
             }
         }
     }

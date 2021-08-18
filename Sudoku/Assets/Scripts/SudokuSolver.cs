@@ -8,25 +8,25 @@ public class SudokuSolver
     /// Checks the sudoku grid recursively if has any solution.
     /// </summary>
     /// <param name="sudokuGridToTest"></param>
-    /// <param name="slotIndex"></param>
+    /// <param name="cellIndex"></param>
     /// <returns>Returns true if there's any solution to solve the sudoku grid.</returns>
-    public bool HasAnySolution(int[,] sudokuGridToTest, int slotIndex = 0)
+    public bool HasAnySolution(int[,] sudokuGridToTest, int cellIndex = 0)
     {
         // Checking if the board completely filled
-        if (slotIndex == 81)
+        if (cellIndex == 81)
         {
             return true;
         }
         
         int[,] copiedSudokuGrid = (int[,]) sudokuGridToTest.Clone();
 
-        int row = (int) Math.Floor((double) (slotIndex / _sizeOfBoard));
-        int column = slotIndex % _sizeOfBoard;
+        int row = (int) Math.Floor((double) (cellIndex / _sizeOfBoard));
+        int column = cellIndex % _sizeOfBoard;
 
-        // Checking the slot has already filled
+        // Checking the cell has already filled
         if (copiedSudokuGrid[row, column] != 0)
         {
-            return HasAnySolution(copiedSudokuGrid, slotIndex + 1);
+            return HasAnySolution(copiedSudokuGrid, cellIndex + 1);
         }
 
         // Testing the numbers(1-9) if it's lead to any solution
@@ -37,9 +37,9 @@ public class SudokuSolver
             {
                 copiedSudokuGrid[row, column] = numberToTry;
 
-                // Check next slot to see if it's okay
-                // If not reset the slot
-                if (!HasAnySolution(copiedSudokuGrid, slotIndex + 1))
+                // Check next cell to see if it's okay
+                // If not reset the cell
+                if (!HasAnySolution(copiedSudokuGrid, cellIndex + 1))
                 {
                     copiedSudokuGrid[row, column] = 0;
                 }
