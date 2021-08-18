@@ -54,6 +54,48 @@ public class SudokuSolver
     }
 
     /// <summary>
+    /// Checks the sudoku grid's every cell if it has only one valid solution.
+    /// </summary>
+    /// <param name="sudokuGridToTest"></param>
+    /// <returns>Returns true if there's only one solution.</returns>
+    public bool HasUniqueSolution(int[,] sudokuGridToTest)
+    {
+        int[,] copiedSudokuGrid = (int[,]) sudokuGridToTest.Clone();
+        
+        // Controlling every cell
+        for (int row = 0; row < _sizeOfBoard; row++)
+        {
+            for (int column = 0; column < _sizeOfBoard ; column++)
+            {
+                // Checking if the cell is empty
+                if (copiedSudokuGrid[row, column] == 0)
+                {
+                    int solutionCount = 0;
+
+                    // Checking every number(1-9) for if it's valid for the cell
+                    // If the number is valid we increase the solution count
+                    for (int numberToTry = 1; numberToTry <= 9; numberToTry++)
+                    {
+                        if (IsValid(copiedSudokuGrid, row, column, numberToTry))
+                        {
+                            solutionCount++;
+                            copiedSudokuGrid[row, column] = numberToTry;
+                        }
+                    }
+
+                    // If there's more than one valid number for the cell we return false
+                    if (solutionCount != 1)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
     /// Checks every row-column-region to see if it's okay to place the number according to sudoku constraints.
     /// </summary>
     /// <param name="sudokuGrid"></param>
