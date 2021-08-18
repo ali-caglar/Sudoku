@@ -40,13 +40,13 @@ public class SudokuSolver
 
                 // Check next slot to see if it's okay
                 // If not reset the slot
-                if (HasAnySolution(copiedSudokuGrid, slotIndex + 1))
+                if (!HasAnySolution(copiedSudokuGrid, slotIndex + 1))
                 {
-                    return true;
+                    copiedSudokuGrid[row, column] = 0;
                 }
                 else
                 {
-                    copiedSudokuGrid[row, column] = 0;
+                    return true;
                 }
             }
         }
