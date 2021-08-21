@@ -4,10 +4,10 @@ using TMPro;
 
 public class SudokuCell : Selectable
 {
-    /// The slot's location
+    /// The cell's location
     public Vector2 ID { get; private set; }
 
-    /// The slot's number
+    /// The cell's number
     public int Number { get; private set; }
 
     private TextMeshProUGUI _numberTMP;
