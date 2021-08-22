@@ -4,18 +4,18 @@ using UnityEngine.UI;
 public class SudokuBoard : MonoBehaviour
 {
     /// The sudoku data that contains the grid
-    [Header("Sudoku Data")]
+    [Header("Sudoku Data")] 
     [SerializeField] private SudokuData _sudokuData;
-    
+
     /// The number of rows to display
-    [Header("Board Size")]
+    [Header("Board Size")] 
     [SerializeField] private int _numberOfRows = 9;
 
     /// The number of columns to display
     [SerializeField] private int _numberOfColumns = 9;
 
     /// The internal margin between the top of the sudoku board and the first cell
-    [Header("Board Padding")]
+    [Header("Board Padding")] 
     [SerializeField] private int _paddingTop = 20;
 
     /// The internal margin between the right of the sudoku board and the last cell
@@ -43,6 +43,9 @@ public class SudokuBoard : MonoBehaviour
     /// The rect transform object of this gameobject
     private RectTransform _rectTransform;
 
+    /// The slots that created by the board
+    private GameObject[,] _slotsOfSudokuBoard;
+
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
@@ -54,10 +57,11 @@ public class SudokuBoard : MonoBehaviour
         AddGridLayoutGroup();
         ResizeBoard();
         CreateSudokuBoard();
+        CreateSudokuGame();
     }
 
     /// <summary>
-    /// Resizes the sudoku cells, depends the screen size, the padding and margin
+    /// Resizes the sudoku cells, depends the screen size, the padding and margin.
     /// </summary>
     private void ResizeCell()
     {
@@ -72,7 +76,7 @@ public class SudokuBoard : MonoBehaviour
     }
 
     /// <summary>
-    /// Adds a grid layout group if there isn't one
+    /// Adds a grid layout group if there isn't one.
     /// </summary>
     private void AddGridLayoutGroup()
     {
@@ -100,7 +104,7 @@ public class SudokuBoard : MonoBehaviour
     }
 
     /// <summary>
-    /// Resizes the sudoku board's panel, depends the number of rows/columns, the padding and margin
+    /// Resizes the sudoku board's panel, depends the number of rows/columns, the padding and margin.
     /// </summary>
     private void ResizeBoard()
     {
@@ -115,12 +119,11 @@ public class SudokuBoard : MonoBehaviour
     }
 
     /// <summary>
-    /// Creates the sudoku grid
+    /// Creates the sudoku slots.
     /// </summary>
     private void CreateSudokuBoard()
     {
-        int[,] completeSudokuGrid = _sudokuData.CompleteSudokuGrid;
-        int[,] playableSudokuGrid = _sudokuData.PlayableSudokuGrid;
+        _slotsOfSudokuBoard = new GameObject[_numberOfRows, _numberOfColumns];
         
         for (int row = 0; row < _numberOfRows; row++)
         {
@@ -131,11 +134,39 @@ public class SudokuBoard : MonoBehaviour
                 slot.transform.position = transform.position;
                 slot.GetComponent<RectTransform>().localScale = Vector3.one;
                 slot.name = $"Slot {row},{column}";
-
-                SudokuCell sudokuCell = slot.AddComponent<SudokuCell>();
                 
-                sudokuCell.SetID(row, column);
-                sudokuCell.SetNumber(playableSudokuGrid[row, column]);
+                _slotsOfSudokuBoard[row, column] = slot;
+            }
+        }
+    }
+
+    /// <summary>
+    /// This will create the game by handling the values of the sudoku cells.
+    /// </summary>
+    private void CreateSudokuGame()
+    {
+        int[,] completeSudokuGrid = _sudokuData.CompleteSudokuGrid;
+        int[,] playableSudokuGrid = _sudokuData.PlayableSudokuGrid;
+        
+        for (int row = 0; row < _numberOfRows; row++)
+        {
+            for (int column = 0; column < _numberOfColumns; column++)
+            {
+                GameObject slot = _slotsOfSudokuBoard[row, column];
+                SudokuCell sudokuCell = slot.AddComponent<SudokuCell>();
+
+                // Sending initial data to cell
+                int cellAnswer = completeSudokuGrid[row, column];
+                sudokuCell.SetCellData(row, column, cellAnswer);
+                
+                // Creating the game
+                int cellValue = playableSudokuGrid[row, column];
+                sudokuCell.EnterValue(cellValue);
+                
+                if (cellValue != 0)
+                {
+                    sudokuCell.SetCellAsClue();
+                }
             }
         }
     }
