@@ -119,7 +119,8 @@ public class SudokuBoard : MonoBehaviour
     /// </summary>
     private void CreateSudokuBoard()
     {
-        int[,] sudokuGrid = _sudokuData.SudokuGrid;
+        int[,] completeSudokuGrid = _sudokuData.CompleteSudokuGrid;
+        int[,] playableSudokuGrid = _sudokuData.PlayableSudokuGrid;
         
         for (int row = 0; row < _numberOfRows; row++)
         {
@@ -134,7 +135,7 @@ public class SudokuBoard : MonoBehaviour
                 SudokuCell sudokuCell = slot.AddComponent<SudokuCell>();
                 
                 sudokuCell.SetID(row, column);
-                sudokuCell.SetNumber(sudokuGrid[row, column]);
+                sudokuCell.SetNumber(playableSudokuGrid[row, column]);
             }
         }
     }
