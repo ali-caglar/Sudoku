@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class SudokuCell : Selectable
@@ -16,12 +17,22 @@ public class SudokuCell : Selectable
     /// Is this cell a clue at the start of the game 
     public bool IsClue { get; private set; }
 
+    /// The sudoku board that contains all of the sudoku cells 
+    private SudokuBoard _sudokuBoard;
+
     private TextMeshProUGUI _numberTMP;
 
     protected override void Awake()
     {
         base.Awake();
+        _sudokuBoard = GetComponentInParent<SudokuBoard>();
         _numberTMP = GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public override void OnSelect(BaseEventData eventData)
+    {
+        base.OnSelect(eventData);
+        _sudokuBoard.SelectSudokuCell(this);
     }
 
     /// <summary>

@@ -37,6 +37,9 @@ public class SudokuBoard : MonoBehaviour
     /// The grid layout used to display the sudoku board in rows and columns
     public GridLayoutGroup SudokuBoardGrid { get; private set; }
 
+    /// The cell that selected by the player
+    public SudokuCell CurrentlySelectedSudokuCell { get; private set; }
+
     /// The horizontal and vertical size of the cells
     private Vector2 _cellSize = new Vector2(50, 50);
 
@@ -58,6 +61,11 @@ public class SudokuBoard : MonoBehaviour
         ResizeBoard();
         CreateSudokuBoard();
         CreateSudokuGame();
+    }
+
+    public void SelectSudokuCell(SudokuCell sudokuCell)
+    {
+        CurrentlySelectedSudokuCell = sudokuCell;
     }
 
     /// <summary>

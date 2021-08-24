@@ -104,16 +104,19 @@ public class SudokuInputManager : MonoBehaviour
     /// </summary>
     private void CreateNumberButtons()
     {
-        for (int i = 1; i <= 9; i++)
+        for (int sudokuNumber = 1; sudokuNumber <= 9; sudokuNumber++)
         {
             GameObject numberSlot = Instantiate(_numberButton, SudokuInputGrid.transform);
 
             numberSlot.transform.position = transform.position;
             numberSlot.GetComponent<RectTransform>().localScale = Vector3.one;
-            numberSlot.name = $"Number {i}";
+            numberSlot.name = $"Number {sudokuNumber}";
 
             TextMeshProUGUI numberTMP = numberSlot.GetComponentInChildren<TextMeshProUGUI>();
-            numberTMP.text = i.ToString();
+            numberTMP.text = sudokuNumber.ToString();
+
+            SudokuInputButton inputButton = numberSlot.AddComponent<SudokuInputButton>();
+            inputButton.SetNumber(sudokuNumber);
         }
     }
 }
