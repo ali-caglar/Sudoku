@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SudokuNumberInput : MonoBehaviour
+public class SudokuInputManager : MonoBehaviour
 {
     [SerializeField] private GameObject _numberButton;
 
     /// The internal margin between the top of the buttons grid and the first button
-    [Header("Grid Padding")] [SerializeField]
-    private int _paddingTop = 20;
+    [Header("Grid Padding")] 
+    [SerializeField] private int _paddingTop = 20;
 
     /// The internal margin between the right of the buttons grid and the last button
     [SerializeField] private int _paddingRight = 20;
@@ -24,6 +24,9 @@ public class SudokuNumberInput : MonoBehaviour
 
     /// The horizontal and vertical size of the buttons
     private Vector2 _buttonSize = new Vector2(50, 50);
+
+    /// The grid layout used to display the sudoku input numbers
+    public HorizontalLayoutGroup SudokuInputGrid { get; private set; }
     
     /// The rect transform object of this gameobject
     private RectTransform _rectTransform;
@@ -32,9 +35,6 @@ public class SudokuNumberInput : MonoBehaviour
     {
         _rectTransform = GetComponent<RectTransform>();
     }
-
-    /// The grid layout used to display the sudoku input numbers
-    public HorizontalLayoutGroup SudokuInputGrid { get; private set; }
 
     private void Start()
     {
