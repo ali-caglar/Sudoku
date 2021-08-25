@@ -5,8 +5,6 @@ using Random = System.Random;
 
 public class SudokuDataGenerator
 {
-    private int _sizeOfBoard = 9;
-
     Random _random = new Random();
     private SudokuSolver _solver = new SudokuSolver();
 
@@ -16,14 +14,14 @@ public class SudokuDataGenerator
     /// <returns>Returns a complete sudoku grid.</returns>
     public int[,] GenerateSudokuData()
     {
-        int[,] sudokuGrid = new int[_sizeOfBoard, _sizeOfBoard];
+        int[,] sudokuGrid = new int[Sudoku.RowCount, Sudoku.ColumnCount];
 
-        for (int row = 0; row < _sizeOfBoard; row++)
+        for (int row = 0; row < Sudoku.RowCount; row++)
         {
-            for (int column = 0; column < _sizeOfBoard; column++)
+            for (int column = 0; column < Sudoku.ColumnCount; column++)
             {
                 // We keep trying until it's filled
-                while (sudokuGrid[row, column] == 0)
+                while (sudokuGrid[row, column] == Sudoku.EmptyCell)
                 {
                     // Producing a random number(1-9) to try
                     int numberToTry = _random.Next(1, 10);
@@ -38,12 +36,12 @@ public class SudokuDataGenerator
                         // If not remove the assigned number
                         if (!_solver.HasAnySolution(sudokuGrid))
                         {
-                            sudokuGrid[row, column] = 0;
+                            sudokuGrid[row, column] = Sudoku.EmptyCell;
                         }
                     }
                     else
                     {
-                        sudokuGrid[row, column] = 0;
+                        sudokuGrid[row, column] = Sudoku.EmptyCell;
                     }
                 }
             }
@@ -69,14 +67,14 @@ public class SudokuDataGenerator
         {
             // Getting a index number from a shuffled list and then removing it to not check again
             int cellIndex = randomCellOrder[0];
-            int row = (int) Math.Floor((double) (cellIndex / _sizeOfBoard));
-            int column = cellIndex % _sizeOfBoard;
+            int row = (int) Math.Floor((double) (cellIndex / Sudoku.RowCount));
+            int column = cellIndex % Sudoku.ColumnCount;
             randomCellOrder.RemoveAt(0);
 
             // Backup the removed number
             int removedNumber = copiedSudokuGrid[row, column];
             // Resetting the cell
-            copiedSudokuGrid[row, column] = 0;
+            copiedSudokuGrid[row, column] = Sudoku.EmptyCell;
 
             // If grid has no unique solution we putting the number back
             if (!_solver.HasUniqueSolution(copiedSudokuGrid))
@@ -96,7 +94,7 @@ public class SudokuDataGenerator
     {
         List<int> randomList = new List<int>();
 
-        for (int i = 0; i < 81; i++)
+        for (int i = 0; i < Sudoku.TotalCellCount; i++)
         {
             randomList.Add(i);
         }

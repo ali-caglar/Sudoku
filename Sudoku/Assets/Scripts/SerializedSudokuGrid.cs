@@ -17,22 +17,22 @@ public struct SerializedSudokuGrid
     /// <returns>Returns 2d array of the sudoku data</returns>
     public int[,] GetSudokuData(SudokuDataType dataType)
     {
-        if (_completeSudokuGridData == null || _completeSudokuGridData.Count < 81
-                                    || _playableSudokuGridData == null || _playableSudokuGridData.Count < 81)
+        if (_completeSudokuGridData == null || _completeSudokuGridData.Count < Sudoku.TotalCellCount
+                                    || _playableSudokuGridData == null || _playableSudokuGridData.Count < Sudoku.TotalCellCount)
         {
             // This will send a console warning and returns an empty grid
             Debug.LogWarning("Sudoku Data is empty.");
-            return new int[9, 9]; 
+            return new int[Sudoku.RowCount, Sudoku.ColumnCount]; 
         }
 
-        int[,] grid = new int[9, 9];
+        int[,] grid = new int[Sudoku.RowCount, Sudoku.ColumnCount];
         List<int> sudokuData = dataType == SudokuDataType.Complete ? _completeSudokuGridData : _playableSudokuGridData;
 
         // Converting the list to 2d array
-        for (int cellIndex = 0; cellIndex < 81; cellIndex++)
+        for (int cellIndex = 0; cellIndex < Sudoku.TotalCellCount; cellIndex++)
         {
-            int row = (int) Math.Floor((double) (cellIndex / 9));
-            int column = cellIndex % 9;
+            int row = (int) Math.Floor((double) (cellIndex / Sudoku.RowCount));
+            int column = cellIndex % Sudoku.ColumnCount;
 
             grid[row, column] = sudokuData[cellIndex];
         }
@@ -43,15 +43,16 @@ public struct SerializedSudokuGrid
     /// <summary>
     /// Converts sudoku grid(2d array) to list.
     /// </summary>
+    /// <param name="dataType"></param>
     /// <param name="data">Sudoku Grid</param>
     public void SetSudokuData(SudokuDataType dataType, int[,] data)
     {
         List<int> sudokuGrid = new List<int>();
         
         // Converting the 2d array to list
-        for (int row = 0; row < 9; row++)
+        for (int row = 0; row < Sudoku.RowCount; row++)
         {
-            for (int column = 0; column < 9; column++)
+            for (int column = 0; column < Sudoku.ColumnCount; column++)
             {
                 int cellData = data[row, column];
                 sudokuGrid.Add(cellData);

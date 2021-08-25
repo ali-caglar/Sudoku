@@ -2,8 +2,6 @@ using System;
 
 public class SudokuSolver
 {
-    private int _sizeOfBoard = 9;
-
     /// <summary>
     /// Checks the sudoku grid recursively if has any solution.
     /// </summary>
@@ -13,18 +11,18 @@ public class SudokuSolver
     public bool HasAnySolution(int[,] sudokuGridToTest, int cellIndex = 0)
     {
         // Checking if the board completely filled
-        if (cellIndex == 81)
+        if (cellIndex == Sudoku.TotalCellCount)
         {
             return true;
         }
         
         int[,] copiedSudokuGrid = (int[,]) sudokuGridToTest.Clone();
 
-        int row = (int) Math.Floor((double) (cellIndex / _sizeOfBoard));
-        int column = cellIndex % _sizeOfBoard;
+        int row = (int) Math.Floor((double) (cellIndex / Sudoku.RowCount));
+        int column = cellIndex % Sudoku.ColumnCount;
 
         // Checking the cell has already filled
-        if (copiedSudokuGrid[row, column] != 0)
+        if (copiedSudokuGrid[row, column] != Sudoku.EmptyCell)
         {
             return HasAnySolution(copiedSudokuGrid, cellIndex + 1);
         }
@@ -41,7 +39,7 @@ public class SudokuSolver
                 // If not reset the cell
                 if (!HasAnySolution(copiedSudokuGrid, cellIndex + 1))
                 {
-                    copiedSudokuGrid[row, column] = 0;
+                    copiedSudokuGrid[row, column] = Sudoku.EmptyCell;
                 }
                 else
                 {
@@ -63,12 +61,12 @@ public class SudokuSolver
         int[,] copiedSudokuGrid = (int[,]) sudokuGridToTest.Clone();
         
         // Controlling every cell
-        for (int row = 0; row < _sizeOfBoard; row++)
+        for (int row = 0; row < Sudoku.RowCount; row++)
         {
-            for (int column = 0; column < _sizeOfBoard ; column++)
+            for (int column = 0; column < Sudoku.ColumnCount ; column++)
             {
                 // Checking if the cell is empty
-                if (copiedSudokuGrid[row, column] == 0)
+                if (copiedSudokuGrid[row, column] == Sudoku.EmptyCell)
                 {
                     int solutionCount = 0;
 
@@ -121,16 +119,16 @@ public class SudokuSolver
         }
 
         // Calculating the region's first and last indexes
-        int regionStartOfRowIndex = row - (row % 3);
-        int regionStartOfColumnIndex = column - (column % 3);
+        int regionStartOfRowIndex = row - (row % Sudoku.RegionRowCount);
+        int regionStartOfColumnIndex = column - (column % Sudoku.RegionColumnCount);
 
-        int regionEndOfRowIndex = regionStartOfRowIndex + 2;
-        int regionEndOfColumnIndex = regionStartOfColumnIndex + 2;
+        int regionEndOfRowIndex = regionStartOfRowIndex + Sudoku.RegionRowCount;
+        int regionEndOfColumnIndex = regionStartOfColumnIndex + Sudoku.RegionColumnCount;
 
         // Checking the region
-        for (int x = regionStartOfRowIndex; x <= regionEndOfRowIndex; x++)
+        for (int x = regionStartOfRowIndex; x < regionEndOfRowIndex; x++)
         {
-            for (int y = regionStartOfColumnIndex; y <= regionEndOfColumnIndex; y++)
+            for (int y = regionStartOfColumnIndex; y < regionEndOfColumnIndex; y++)
             {
                 if (sudokuGrid[x, y] == numberToTry)
                 {
