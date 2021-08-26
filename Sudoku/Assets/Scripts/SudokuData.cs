@@ -1,4 +1,5 @@
 using UnityEngine;
+using Enums;
 
 [CreateAssetMenu(fileName = "Sudoku Data", menuName = "Sudoku/Sudoku Data")]
 public class SudokuData : ScriptableObject
