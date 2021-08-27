@@ -32,7 +32,7 @@ public class SudokuCell : Selectable
     public override void OnSelect(BaseEventData eventData)
     {
         base.OnSelect(eventData);
-        _sudokuBoard.SelectSudokuCell(this);
+        SelectThisCell();
     }
 
     /// <summary>
@@ -55,6 +55,7 @@ public class SudokuCell : Selectable
     {
         Value = number;
         ChangeText(number);
+        _sudokuBoard.SelectSudokuCell(null);
     }
 
     /// <summary>
@@ -74,5 +75,20 @@ public class SudokuCell : Selectable
     private void ChangeText(int number)
     {
         _numberTMP.text = number != 0 ? number.ToString() : "";
+    }
+
+    /// <summary>
+    /// When this cell clicked, inform the board that this cell is chosen.
+    /// </summary>
+    private void SelectThisCell()
+    {
+        if (_sudokuBoard.CurrentlySelectedSudokuCell != this)
+        {
+            _sudokuBoard.SelectSudokuCell(this);
+        }
+        else
+        {
+            _sudokuBoard.SelectSudokuCell(null);
+        }
     }
 }
