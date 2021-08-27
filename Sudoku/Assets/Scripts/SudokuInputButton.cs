@@ -35,6 +35,9 @@ public class SudokuInputButton : MonoBehaviour
     /// </summary>
     private void InputNumber()
     {
-        _sudokuBoard.CurrentlySelectedSudokuCell.EnterValue(_number);
+        if (_sudokuBoard.CurrentlySelectedSudokuCell != null)
+        {
+            _sudokuBoard.CurrentlySelectedSudokuCell.EnterValue(_number);
+        }
     }
 }
