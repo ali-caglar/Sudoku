@@ -25,6 +25,7 @@ public class SudokuCell : Selectable
     protected override void Awake()
     {
         base.Awake();
+        SetColors();
         _sudokuBoard = GetComponentInParent<SudokuBoard>();
         _numberTMP = GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -87,6 +88,19 @@ public class SudokuCell : Selectable
     private void ChangeText(int number)
     {
         _numberTMP.text = number != 0 ? number.ToString() : "";
+    }
+
+    /// <summary>
+    /// Setting pre-defined colors.
+    /// </summary>
+    private void SetColors()
+    {
+        ColorBlock colorBlock = this.colors;
+        colorBlock.normalColor = Sudoku.NormalColor;
+        colorBlock.disabledColor = Sudoku.ClueColor;
+        colorBlock.selectedColor = Sudoku.SelectedColor;
+        colorBlock.highlightedColor = Sudoku.HighlightColor;
+        this.colors = colorBlock;
     }
 
     /// <summary>
