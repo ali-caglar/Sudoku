@@ -29,6 +29,18 @@ public class SudokuCell : Selectable
         _numberTMP = GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        SudokuBoard.OnCellSelected += CheckHighlight;
+    }
+    
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        SudokuBoard.OnCellSelected -= CheckHighlight;
+    }
+
     public override void OnSelect(BaseEventData eventData)
     {
         base.OnSelect(eventData);

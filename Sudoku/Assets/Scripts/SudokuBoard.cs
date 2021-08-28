@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SudokuBoard : GridCreator
@@ -8,6 +9,9 @@ public class SudokuBoard : GridCreator
     
     /// The cell that selected by the player
     public SudokuCell CurrentlySelectedSudokuCell { get; private set; }
+    
+    /// Invokes when a cell selected 
+    public static event Action<Vector2> OnCellSelected;
 
     protected override void Start()
     {
@@ -15,9 +19,18 @@ public class SudokuBoard : GridCreator
         CreateSudokuGame();
     }
 
+    /// <summary>
+    /// We caching the selected sudoku cell in here and invoking oncellselected delegate.
+    /// </summary>
+    /// <param name="sudokuCell"></param>
     public void SelectSudokuCell(SudokuCell sudokuCell)
     {
         CurrentlySelectedSudokuCell = sudokuCell;
+
+        if (sudokuCell != null)
+        {
+            OnCellSelected?.Invoke(sudokuCell.ID);
+        }
     }
 
     /// <summary>
