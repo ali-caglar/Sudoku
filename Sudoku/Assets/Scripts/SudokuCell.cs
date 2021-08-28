@@ -68,6 +68,7 @@ public class SudokuCell : Selectable
     {
         Value = number;
         ChangeText(number);
+        CheckAnswer();
         _sudokuBoard.SelectSudokuCell(null);
     }
 
@@ -79,6 +80,7 @@ public class SudokuCell : Selectable
     {
         IsClue = true;
         interactable = false;
+        _numberTMP.color = Sudoku.ClueTextColor;
     }
 
     /// <summary>
@@ -116,6 +118,14 @@ public class SudokuCell : Selectable
         {
             _sudokuBoard.SelectSudokuCell(null);
         }
+    }
+
+    /// <summary>
+    /// Checks the answer and if it's wrong changes the color of the text. 
+    /// </summary>
+    private void CheckAnswer()
+    {
+        _numberTMP.color = Value == Answer ? Sudoku.AnswerTextColor : Sudoku.WrongAnswerTextColor;
     }
 
     /// <summary>
