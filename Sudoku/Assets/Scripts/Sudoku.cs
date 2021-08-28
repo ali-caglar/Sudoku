@@ -13,6 +13,7 @@ public static class Sudoku
     public static readonly Color NormalColor = Color.white;
     public static readonly Color SelectedColor = Color.white;
     public static readonly Color HighlightColor = Color.cyan;
-    public static readonly Color AnswerColor = Color.blue;
-    public static readonly Color WrongAnswerColor = Color.red;
+    public static readonly Color ClueTextColor = Color.black;
+    public static readonly Color AnswerTextColor = Color.blue;
+    public static readonly Color WrongAnswerTextColor = Color.red;
 }
