@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public static class Sudoku
 {
     public const int RowCount = 9;
@@ -6,4 +8,11 @@ public static class Sudoku
     public const int EmptyCell = 0;
     public const int RegionRowCount = 3;
     public const int RegionColumnCount = 3;
+
+    public static readonly Color ClueColor = Color.white;
+    public static readonly Color NormalColor = Color.white;
+    public static readonly Color SelectedColor = Color.white;
+    public static readonly Color HighlightColor = Color.cyan;
+    public static readonly Color AnswerColor = Color.blue;
+    public static readonly Color WrongAnswerColor = Color.red;
 }
