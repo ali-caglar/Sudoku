@@ -117,4 +117,43 @@ public class SudokuCell : Selectable
             _sudokuBoard.SelectSudokuCell(null);
         }
     }
+
+    /// <summary>
+    /// Compares the cell's and the selected cell id,
+    /// if it's in the same row, column or inside the same region, highlights the cell.
+    /// </summary>
+    /// <param name="selectedCellID">Row and column indexes of the selected sudoku cell</param>
+    private void CheckHighlight(Vector2 selectedCellID)
+    {
+        // Set cell's state to normal unless it's the selected one
+        DoStateTransition(selectedCellID == ID ? SelectionState.Selected : SelectionState.Normal, true);
+
+        int row = (int) selectedCellID.x;
+        int column = (int) selectedCellID.y;
+        
+        // Checking ID if it's in the same row
+        if (row == ID.x)
+        {
+            DoStateTransition(SelectionState.Highlighted, true);
+        }
+        // Checking ID if it's in the same column
+        if (column == ID.y)
+        {
+            DoStateTransition(SelectionState.Highlighted, true);
+        }
+        
+        // Calculating the region's first and last indexes
+        int regionStartOfRowIndex = row - (row % Sudoku.RegionRowCount);
+        int regionStartOfColumnIndex = column - (column % Sudoku.RegionColumnCount);
+
+        int regionEndOfRowIndex = regionStartOfRowIndex + Sudoku.RegionRowCount;
+        int regionEndOfColumnIndex = regionStartOfColumnIndex + Sudoku.RegionColumnCount;
+
+        // Checking ID if it's inside the region
+        if (ID.x >= regionStartOfRowIndex && ID.x < regionEndOfRowIndex 
+                                          && ID.y >= regionStartOfColumnIndex && ID.y < regionEndOfColumnIndex)
+        {
+            DoStateTransition(SelectionState.Highlighted, true);
+        }
+    }
 }
