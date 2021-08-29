@@ -1,4 +1,4 @@
-namespace Enums
+namespace Sudoku.Enums
 {
     public enum LayoutType
     {
