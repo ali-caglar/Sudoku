@@ -17,8 +17,7 @@ namespace Sudoku.ScriptableObjects
     
         private SudokuDataGenerator _generator = new SudokuDataGenerator();
 
-        [ContextMenu("Generate Grid")]
-        private void GenerateSudokuGrid()
+        public void GenerateSudokuGrid()
         {
             int[,] completeSudokuData = _generator.GenerateSudokuData();
             int[,] playableSudokuData = _generator.PrepareSudokuDataToBePlayable(completeSudokuData);
