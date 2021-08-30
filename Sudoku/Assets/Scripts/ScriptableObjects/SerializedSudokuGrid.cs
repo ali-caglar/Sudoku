@@ -10,10 +10,10 @@ namespace Sudoku.ScriptableObjects
     public struct SerializedSudokuGrid
     {
         /// Contains all numbers of the sudoku grid
-        private List<int> _completeSudokuGridData;
+        [SerializeField] private List<int> _completeSudokuGridData;
 
         /// Contains the playable sudoku grid's data
-        private List<int> _playableSudokuGridData;
+        [SerializeField] private List<int> _playableSudokuGridData;
 
         /// <summary>
         /// Converts the list that contains the sudoku to 2d array.
